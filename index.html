@@ -155,10 +155,7 @@
     }
     .hero-bg-photo {
       position: absolute;
-      top: 200px;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      inset: 0;
       z-index: 0;
     }
     .hero-bg-photo img {
@@ -803,10 +800,6 @@
     .nav-dropdown a:hover { color: oklch(97% 0.004 60); }
 
     /* ── RESPONSIVE ── */
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .hero-bg-photo { top: 50px; }
-    }
-
     @media (max-width: 768px) {
       nav { padding: 20px 24px; }
       .nav-links { display: none; }
@@ -814,7 +807,6 @@
       .nav-hamburger { display: flex; }
 
       #hero { padding: 96px 24px 60px; }
-      .hero-bg-photo { top: 50px; }
       .hero-scroll-hint { right: 24px; }
       .hero-actions { flex-direction: column; gap: 12px; }
       .btn-primary, .btn-ghost { text-align: center; }
