@@ -8,10 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Barlow:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.typekit.net/hoz6tlu.css" />
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -22,11 +18,11 @@
       --fg:        oklch(18% 0.008 240);
       --fg2:       oklch(40% 0.007 240);
       --fg3:       oklch(60% 0.006 240);
-      --accent1:   oklch(45% 0.18 25);    /* deep red */
-      --accent2:   oklch(52% 0.12 58);    /* warm ochre */
+      --accent1:   oklch(38% 0.09 240);
+      --accent2:   oklch(52% 0.07 200);
       --accent3:   oklch(48% 0.11 280);   /* muted violet */
       --mono:      'DM Mono', 'Courier New', monospace;
-      --sans:      'EB Garamond', Georgia, serif;
+      --sans:      'Space Grotesk', sans-serif;
       --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -1236,8 +1232,6 @@
     <div class="footer-copy" style="font-family:var(--mono);font-size:10px;color:var(--fg3);">Photography Digital Tech</div>
   </footer>
 
-  <script type="text/babel" src="tweaks-panel.jsx"></script>
-
   <script>
     // ── Hero parallax ──
     const heroPhoto = document.querySelector('.hero-bg-photo img');
@@ -1379,106 +1373,6 @@
     strip.style.msOverflowStyle = 'none';
   </script>
 
-  <script type="text/babel">
-    const { useState, useEffect } = React;
-
-    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-      "accentColor": "slate",
-      "bgIntensity": 100,
-      "showBlobs": true,
-      "fontStyle": "space",
-      "heroText": "The workflow behind the image*"
-    }/*EDITMODE-END*/;
-
-    function GazdigiTweaks() {
-      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-
-      useEffect(() => {
-        const root = document.documentElement;
-        if (tweaks.accentColor === 'red') {
-          root.style.setProperty('--accent1', 'oklch(45% 0.18 25)');
-          root.style.setProperty('--accent2', 'oklch(52% 0.12 58)');
-        } else if (tweaks.accentColor === 'ink') {
-          root.style.setProperty('--accent1', 'oklch(22% 0.01 240)');
-          root.style.setProperty('--accent2', 'oklch(40% 0.007 240)');
-        } else if (tweaks.accentColor === 'forest') {
-          root.style.setProperty('--accent1', 'oklch(38% 0.12 150)');
-          root.style.setProperty('--accent2', 'oklch(52% 0.09 90)');
-        } else if (tweaks.accentColor === 'slate') {
-          root.style.setProperty('--accent1', 'oklch(38% 0.09 240)');
-          root.style.setProperty('--accent2', 'oklch(52% 0.07 200)');
-        }
-      }, [tweaks.accentColor]);
-
-      useEffect(() => {
-        const canvas = document.getElementById('blob-canvas');
-        canvas.style.opacity = tweaks.showBlobs ? (tweaks.bgIntensity / 100) : 0;
-      }, [tweaks.showBlobs, tweaks.bgIntensity]);
-
-      useEffect(() => {
-        const root = document.documentElement;
-        if (tweaks.fontStyle === 'helvetica') {
-          root.style.setProperty('--sans', "'Helvetica Neue', Helvetica, Arial, sans-serif");
-        } else if (tweaks.fontStyle === 'garamond') {
-          root.style.setProperty('--sans', "'EB Garamond', Georgia, serif");
-        } else if (tweaks.fontStyle === 'barlow') {
-          root.style.setProperty('--sans', "'Barlow', sans-serif");
-        } else if (tweaks.fontStyle === 'playfair') {
-          root.style.setProperty('--sans', "'Playfair Display', Georgia, serif");
-        } else if (tweaks.fontStyle === 'space') {
-          root.style.setProperty('--sans', "'Space Grotesk', sans-serif");
-        }
-      }, [tweaks.fontStyle]);
-
-      return (
-        <TweaksPanel title="Tweaks">
-          <TweakSection label="Accent Color">
-            <TweakRadio
-              value={tweaks.accentColor}
-              options={[
-                { value: 'red',    label: 'Red' },
-                { value: 'ink',    label: 'Ink' },
-                { value: 'forest', label: 'Forest' },
-                { value: 'slate',  label: 'Slate' },
-              ]}
-              onChange={v => setTweak('accentColor', v)}
-            />
-          </TweakSection>
-          <TweakSection label="Blob Ambience">
-            <TweakToggle
-              label="Show blobs"
-              value={tweaks.showBlobs}
-              onChange={v => setTweak('showBlobs', v)}
-            />
-            <TweakSlider
-              label="Intensity"
-              min={10} max={100} step={5}
-              value={tweaks.bgIntensity}
-              onChange={v => setTweak('bgIntensity', v)}
-            />
-          </TweakSection>
-          <TweakSection label="Typography">
-            <TweakSelect
-              label="Font style"
-              value={tweaks.fontStyle}
-              options={[
-                { value: 'helvetica', label: 'Helvetica Neue — clean sans' },
-                { value: 'garamond',  label: 'EB Garamond — classic serif' },
-                { value: 'barlow',    label: 'Barlow — condensed editorial' },
-                { value: 'playfair',  label: 'Playfair Display — high contrast' },
-                { value: 'space',     label: 'Space Grotesk — geometric tech' },
-              ]}
-              onChange={v => setTweak('fontStyle', v)}
-            />
-          </TweakSection>
-        </TweaksPanel>
-      );
-    }
-
-    const tweaksMount = document.createElement('div');
-    document.body.appendChild(tweaksMount);
-    ReactDOM.createRoot(tweaksMount).render(<GazdigiTweaks />);
-  </script>
 
 </body>
 </html>
