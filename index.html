@@ -725,10 +725,83 @@
       66% { transform: translate(-20px, 20px) scale(0.97); }
     }
 
+    /* ── MOBILE NAV ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 200;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: oklch(97% 0.004 60);
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    nav.scrolled .nav-hamburger span { background: var(--fg); }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 140;
+      background: oklch(8% 0.01 240 / 0);
+      pointer-events: none;
+      transition: background 0.35s;
+    }
+    .nav-overlay.open {
+      background: oklch(8% 0.01 240 / 0.5);
+      pointer-events: all;
+    }
+    .nav-dropdown {
+      position: fixed;
+      top: 0; right: 0;
+      width: min(280px, 80vw);
+      height: 100vh;
+      background: oklch(14% 0.01 240 / 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-left: 1px solid oklch(97% 0.004 60 / 0.08);
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      padding: 100px 40px 40px;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .nav-dropdown.open {
+      transform: translateX(0);
+      pointer-events: all;
+    }
+    .nav-dropdown a {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: oklch(70% 0.006 60);
+      padding: 18px 0;
+      border-bottom: 1px solid oklch(97% 0.004 60 / 0.06);
+      transition: color 0.2s;
+    }
+    .nav-dropdown a:last-child { border-bottom: none; color: var(--accent1); margin-top: 8px; }
+    .nav-dropdown a:hover { color: oklch(97% 0.004 60); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 20px 24px; }
       .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
 
       #hero { padding: 96px 24px 60px; }
       .hero-scroll-hint { right: 24px; }
@@ -806,7 +879,19 @@
       <li><a href="#tech">Tech</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Contact</a>
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="nav-overlay" id="nav-overlay"></div>
+  <div class="nav-dropdown" id="nav-dropdown">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#work">Work</a>
+    <a href="#tech">Tech</a>
+    <a href="#contact">Contact</a>
+  </div>
 
   <!-- HERO -->
   <section id="hero">
@@ -1167,6 +1252,28 @@
     window.addEventListener('scroll', () => {
       navEl.classList.toggle('scrolled', window.scrollY > window.innerHeight * 0.7);
     });
+
+    // ── Mobile nav ──
+    const hamburger = document.querySelector('.nav-hamburger');
+    const navDropdown = document.getElementById('nav-dropdown');
+    const navOverlay = document.getElementById('nav-overlay');
+    function openMenu() {
+      hamburger.classList.add('open');
+      navDropdown.classList.add('open');
+      navOverlay.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      navDropdown.classList.remove('open');
+      navOverlay.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+    hamburger.addEventListener('click', () => {
+      navDropdown.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    navOverlay.addEventListener('click', closeMenu);
+    navDropdown.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
     // ── Blob canvas ──
     (function() {
