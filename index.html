@@ -223,6 +223,11 @@
       text-decoration: none;
     }
     .nav-logo span { color: inherit; }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
     .nav-links {
       display: flex;
       gap: 40px;
@@ -906,8 +911,7 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 20px 24px; }
-      .nav-links { display: none; }
-      .nav-cta { display: none; }
+      .nav-right { display: none; }
       .nav-hamburger { display: flex; }
 
       #hero { padding: 96px 24px 60px; }
@@ -979,13 +983,15 @@
   <!-- NAV -->
   <nav>
     <a href="#" class="nav-logo">gazdigi<span>*</span></a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#tech">Tech</a></li>
-    </ul>
-    <a href="#contact" class="nav-cta">Contact</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#tech">Tech</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
     <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
