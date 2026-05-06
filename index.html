@@ -736,58 +736,6 @@
     .tech-dot.gold { background: var(--accent2); }
     .tech-dot.violet { background: var(--accent3); }
 
-    /* ── GALLERY ── */
-    #gallery {
-      padding: 100px 52px 140px;
-      border-top: 1px solid oklch(18% 0.008 240 / 0.08);
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 300px;
-      gap: 4px;
-      margin-top: 64px;
-    }
-    .gallery-grid .gallery-item:first-child {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      background: var(--bg3);
-      cursor: none;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(15%) brightness(0.95);
-      transition: filter 0.5s, transform 0.6s var(--ease-out);
-    }
-    .gallery-item:hover img {
-      filter: grayscale(0%) brightness(1);
-      transform: scale(1.06);
-    }
-    .gallery-item-label {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 16px 20px;
-      background: linear-gradient(to top, oklch(18% 0.008 240 / 0.75), transparent);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: oklch(90% 0.004 60);
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.3s, transform 0.3s;
-    }
-    .gallery-item:hover .gallery-item-label {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     /* ── CONTACT ── */
     #contact {
       padding: 140px 52px 100px;
@@ -1377,51 +1325,11 @@
     </div>
   </section>
 
-  <!-- GALLERY -->
-  <section id="gallery">
-    <div class="section-header">
-      <div>
-        <p class="section-label reveal">06 — Gallery</p>
-        <h2 class="section-title reveal reveal-delay-1">The work.</h2>
-      </div>
-    </div>
-    <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="uploads/work/Nike Canada.png" alt="Nike Canada" />
-        <div class="gallery-item-label">Nike Canada</div>
-      </div>
-      <div class="gallery-item">
-        <img src="uploads/work/harpers cover.webp" alt="Harper's Cover" />
-        <div class="gallery-item-label">Harper's Cover</div>
-      </div>
-      <div class="gallery-item">
-        <img src="uploads/work/Rolling stone cover.webp" alt="Rolling Stone Cover" />
-        <div class="gallery-item-label">Rolling Stone Cover</div>
-      </div>
-      <div class="gallery-item">
-        <img src="uploads/work/faddy cover.webp" alt="Faddy Cover" />
-        <div class="gallery-item-label">Faddy Cover</div>
-      </div>
-      <div class="gallery-item">
-        <img src="uploads/work/pga tour.webp" alt="PGA Tour" />
-        <div class="gallery-item-label">PGA Tour</div>
-      </div>
-      <div class="gallery-item">
-        <img src="uploads/work/Artist box.webp" alt="Artist Box" />
-        <div class="gallery-item-label">Artist Box</div>
-      </div>
-      <div class="gallery-item">
-        <img src="uploads/work/Spring_Fitness_Miami_Beach-EstudioFe_397.raf copia.JPG" alt="Spring Fitness Miami Beach" />
-        <div class="gallery-item-label">Spring Fitness — Miami Beach</div>
-      </div>
-    </div>
-  </section>
-
   <!-- SESSIONS -->
   <section id="sessions">
     <div class="section-header">
       <div>
-        <p class="section-label reveal">07 — The Sessions</p>
+        <p class="section-label reveal">06 — The Sessions</p>
         <h2 class="section-title reveal reveal-delay-1">On set.</h2>
       </div>
     </div>
@@ -1430,7 +1338,7 @@
   <!-- CONTACT -->
   <section id="contact">
     <div>
-      <p class="section-label reveal">08 — Connect</p>
+      <p class="section-label reveal">07 — Connect</p>
       <div class="contact-big reveal reveal-delay-1">
         <a href="mailto:gazdigitech@gmail.com">Let's work<br/>together<span style="color:var(--accent1)">*</span></a>
       </div>
