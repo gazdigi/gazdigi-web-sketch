@@ -1024,7 +1024,18 @@
   <!-- TICKER -->
   <div class="ticker-wrap">
     <div class="ticker-inner" id="ticker">
-      <!-- items duplicated in JS -->
+      <span class="ticker-item"><span class="ticker-dot"></span>Capture One</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Tethered Capture</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>File Management</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Live Color</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>AI Automation</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>On-Location</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Studio</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Scripting</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>LUT Design</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Digital Tech</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>RAW Workflow</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>ICC Profiles</span>
     </div>
   </div>
 
@@ -1423,20 +1434,10 @@
       requestAnimationFrame(draw);
     })();
 
-    // ── Ticker ──
-    const tickerItems = [
-      'Capture One', 'Tethered Capture', 'File Management', 'Live Color',
-      'AI Automation', 'On-Location', 'Studio', 'Scripting', 'LUT Design',
-      'Digital Tech', 'RAW Workflow', 'ICC Profiles'
-    ];
+    // ── Ticker — duplicate static HTML nodes for seamless loop ──
     const ticker = document.getElementById('ticker');
-    const allItems = [...tickerItems, ...tickerItems];
-    allItems.forEach(label => {
-      const el = document.createElement('span');
-      el.className = 'ticker-item';
-      el.innerHTML = `<span class="ticker-dot"></span>${label}`;
-      ticker.appendChild(el);
-    });
+    const originals = Array.from(ticker.children);
+    originals.forEach(el => ticker.appendChild(el.cloneNode(true)));
 
     // ── Scroll reveal ──
     const revealEls = document.querySelectorAll('.reveal');
