@@ -1617,11 +1617,11 @@
         const j = Math.floor(Math.random() * (i + 1));
         [words[i], words[j]] = [words[j], words[i]];
       }
-      const ticker = document.getElementById(‘sessions-ticker’);
+      const ticker = document.getElementById("sessions-ticker");
       if (!ticker) return;
-      const set = words.map(w =>
-        `<span class="ticker-item"><span class="ticker-dot"></span>${w}</span>`
-      ).join(‘’);
+      const set = words.map(function(w) {
+        return "<span class=\"ticker-item\"><span class=\"ticker-dot\"></span>" + w + "</span>";
+      }).join("");
       ticker.innerHTML = set + set;
 
       requestAnimationFrame(function measure() {
@@ -1632,7 +1632,7 @@
         (function tick() {
           pos -= speed;
           if (-pos >= singleW) pos += singleW;
-          ticker.style.transform = ‘translateX(‘ + pos + ‘px)’;
+          ticker.style.transform = "translateX(" + pos + "px)";
           requestAnimationFrame(tick);
         })();
       });
