@@ -767,6 +767,21 @@
       display: block;
     }
 
+    /* ── SESSIONS TICKER ── */
+    .sessions-ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid oklch(18% 0.008 240 / 0.1);
+      border-bottom: 1px solid oklch(18% 0.008 240 / 0.1);
+      padding: 18px 0;
+      background: oklch(18% 0.008 240 / 0.02);
+    }
+    .sessions-ticker-inner {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+      animation: ticker 42s linear infinite;
+    }
+
     /* ── CONTACT ── */
     #contact {
       padding: 140px 52px 100px;
@@ -1416,6 +1431,11 @@
     </div>
   </section>
 
+  <!-- SESSIONS TICKER -->
+  <div class="sessions-ticker-wrap">
+    <div class="sessions-ticker-inner" id="sessions-ticker"></div>
+  </div>
+
   <!-- CONTACT -->
   <section id="contact">
     <div>
@@ -1580,6 +1600,27 @@
     strip.style.overflowX = 'auto';
     strip.style.scrollbarWidth = 'none';
     strip.style.msOverflowStyle = 'none';
+
+    // ── Sessions ticker — shuffle on each load ──
+    (function () {
+      const words = [
+        'Jorge Duva', 'Javi Eyzaguirre', 'Alexis Belhumeur', 'Pablo Salazar',
+        'Dina Zhulii', 'Estudio Fe', 'Bam Productions', 'Ginga Pictures',
+        'Alska Films', 'Knas Creative', 'VML', 'Till Dawn',
+        'Nike', 'Vogue', 'Harper’s Bazaar', 'Marie Claire',
+        'Perry Ellis', 'PGA Tour', 'Original Penguin', 'Elle', 'Flaunt'
+      ];
+      for (let i = words.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [words[i], words[j]] = [words[j], words[i]];
+      }
+      const ticker = document.getElementById('sessions-ticker');
+      if (!ticker) return;
+      const set = words.map(w =>
+        `<span class="ticker-item"><span class="ticker-dot"></span>${w}</span>`
+      ).join('');
+      ticker.innerHTML = set + set;
+    }());
 
     // ── Sessions strip — mouse-position scroll ──
     (function () {
