@@ -631,20 +631,9 @@
       margin-bottom: 48px;
     }
     .photo-strip {
-      overflow: hidden;
-    }
-    .photo-track {
       display: flex;
       gap: 2px;
-      width: max-content;
-      animation: marquee-photos 28s linear infinite;
-    }
-    .photo-strip:hover .photo-track {
-      animation-play-state: paused;
-    }
-    @keyframes marquee-photos {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+      transition: transform 0.1s linear;
     }
     .photo-item {
       flex-shrink: 0;
@@ -660,9 +649,9 @@
       height: 100%;
       object-fit: cover;
       filter: grayscale(20%) brightness(0.96);
-      transition: filter 0.5s, transform 0.6s var(--ease-out);
+      transition: filter 0.5s, transform 0.5s var(--ease-out);
     }
-    .photo-item:hover img { filter: grayscale(0%) brightness(1); transform: scale(1.3); }
+    .photo-item:hover img { filter: grayscale(0%) brightness(1); transform: scale(1.04); }
     .photo-caption {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -1106,62 +1095,32 @@
       <h2 class="section-title reveal reveal-delay-1">The setup.</h2>
     </div>
     <div class="photo-strip" id="photo-strip">
-      <div class="photo-track">
-        <div class="photo-item">
-          <img src="uploads/Screenshot 2026-04-15 at 5.44.58 PM.png" alt="gazdigi* studio cart" />
-          <div class="photo-caption">Studio Setup — Full Cart</div>
+      <div class="photo-item">
+        <img src="uploads/Screenshot 2026-04-15 at 5.44.58 PM.png" alt="gazdigi* studio cart" />
+        <div class="photo-caption">Studio Setup — Full Cart</div>
+      </div>
+      <div class="photo-item">
+        <img src="uploads/Screenshot 2026-04-15 at 5.45.15 PM.png" alt="gazdigi* B&W studio" />
+        <div class="photo-caption">Studio — B&amp;W</div>
+      </div>
+      <div class="photo-item">
+        <img src="uploads/IMG_0963.jpeg" alt="gazdigi* on location" />
+        <div class="photo-caption">On-Location — Exterior</div>
+      </div>
+      <div class="photo-item">
+        <img src="uploads/IMG_1052 2.jpeg" alt="gazdigi* poolside" />
+        <div class="photo-caption">On-Location — Outdoor</div>
+      </div>
+      <div class="photo-item">
+        <div class="photo-placeholder">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
+            <rect x="2" y="6" width="28" height="20" rx="1"/>
+            <circle cx="16" cy="16" r="5"/>
+            <circle cx="24" cy="10" r="2"/>
+          </svg>
+          <div class="photo-placeholder-label">Campaign shoot<br/>coming soon</div>
         </div>
-        <div class="photo-item">
-          <img src="uploads/Screenshot 2026-04-15 at 5.45.15 PM.png" alt="gazdigi* B&W studio" />
-          <div class="photo-caption">Studio — B&amp;W</div>
-        </div>
-        <div class="photo-item">
-          <img src="uploads/IMG_0963.jpeg" alt="gazdigi* on location" />
-          <div class="photo-caption">On-Location — Exterior</div>
-        </div>
-        <div class="photo-item">
-          <img src="uploads/IMG_1052 2.jpeg" alt="gazdigi* poolside" />
-          <div class="photo-caption">On-Location — Outdoor</div>
-        </div>
-        <div class="photo-item">
-          <div class="photo-placeholder">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
-              <rect x="2" y="6" width="28" height="20" rx="1"/>
-              <circle cx="16" cy="16" r="5"/>
-              <circle cx="24" cy="10" r="2"/>
-            </svg>
-            <div class="photo-placeholder-label">Campaign shoot<br/>coming soon</div>
-          </div>
-          <div class="photo-caption">Coming Soon</div>
-        </div>
-        <!-- duplicated set for seamless loop -->
-        <div class="photo-item">
-          <img src="uploads/Screenshot 2026-04-15 at 5.44.58 PM.png" alt="gazdigi* studio cart" />
-          <div class="photo-caption">Studio Setup — Full Cart</div>
-        </div>
-        <div class="photo-item">
-          <img src="uploads/Screenshot 2026-04-15 at 5.45.15 PM.png" alt="gazdigi* B&W studio" />
-          <div class="photo-caption">Studio — B&amp;W</div>
-        </div>
-        <div class="photo-item">
-          <img src="uploads/IMG_0963.jpeg" alt="gazdigi* on location" />
-          <div class="photo-caption">On-Location — Exterior</div>
-        </div>
-        <div class="photo-item">
-          <img src="uploads/IMG_1052 2.jpeg" alt="gazdigi* poolside" />
-          <div class="photo-caption">On-Location — Outdoor</div>
-        </div>
-        <div class="photo-item">
-          <div class="photo-placeholder">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
-              <rect x="2" y="6" width="28" height="20" rx="1"/>
-              <circle cx="16" cy="16" r="5"/>
-              <circle cx="24" cy="10" r="2"/>
-            </svg>
-            <div class="photo-placeholder-label">Campaign shoot<br/>coming soon</div>
-          </div>
-          <div class="photo-caption">Coming Soon</div>
-        </div>
+        <div class="photo-caption">Coming Soon</div>
       </div>
     </div>
   </section>
@@ -1525,6 +1484,21 @@
       });
     }, 100);
 
+    // ── Photo strip drag scroll ──
+    const strip = document.getElementById('photo-strip');
+    let isDown = false, startX, scrollLeft;
+    strip.addEventListener('mousedown', e => { isDown = true; strip.style.cursor = 'grabbing'; startX = e.pageX - strip.offsetLeft; scrollLeft = strip.scrollLeft; });
+    strip.addEventListener('mouseleave', () => { isDown = false; strip.style.cursor = ''; });
+    strip.addEventListener('mouseup', () => { isDown = false; strip.style.cursor = ''; });
+    strip.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - strip.offsetLeft;
+      strip.scrollLeft = scrollLeft - (x - startX) * 1.5;
+    });
+    strip.style.overflowX = 'auto';
+    strip.style.scrollbarWidth = 'none';
+    strip.style.msOverflowStyle = 'none';
   </script>
 
 
