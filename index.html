@@ -736,6 +736,53 @@
     .tech-dot.gold { background: var(--accent2); }
     .tech-dot.violet { background: var(--accent3); }
 
+    /* ── SESSIONS ── */
+    #sessions {
+      padding: 100px 52px 140px;
+      border-top: 1px solid oklch(18% 0.008 240 / 0.08);
+    }
+    .sessions-masonry {
+      columns: 3;
+      column-gap: 4px;
+      margin-top: 64px;
+    }
+    .sessions-item {
+      break-inside: avoid;
+      margin-bottom: 4px;
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+    .sessions-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: grayscale(12%) brightness(0.96);
+      transition: filter 0.5s, transform 0.6s var(--ease-out);
+    }
+    .sessions-item:hover img {
+      filter: grayscale(0%) brightness(1);
+      transform: scale(1.04);
+    }
+    .sessions-item-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 14px 18px;
+      background: linear-gradient(to top, oklch(18% 0.008 240 / 0.72), transparent);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: oklch(92% 0.004 60);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .sessions-item:hover .sessions-item-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* ── CONTACT ── */
     #contact {
       padding: 140px 52px 100px;
@@ -913,6 +960,8 @@
       nav { padding: 20px 24px; }
       .nav-right { display: none; }
       .nav-hamburger { display: flex; }
+      #sessions { padding: 80px 24px 100px; }
+      .sessions-masonry { columns: 2; }
 
       #hero { padding: 96px 24px 60px; }
       .hero-scroll-hint { right: 24px; }
@@ -1331,6 +1380,36 @@
       <div>
         <p class="section-label reveal">06 — The Sessions</p>
         <h2 class="section-title reveal reveal-delay-1">On set.</h2>
+      </div>
+    </div>
+    <div class="sessions-masonry">
+      <div class="sessions-item">
+        <img src="uploads/work/Nike Canada.png" alt="Nike Canada" />
+        <div class="sessions-item-label">Nike Canada</div>
+      </div>
+      <div class="sessions-item">
+        <img src="uploads/work/harpers cover.webp" alt="Harper's Bazaar Cover" />
+        <div class="sessions-item-label">Harper's Bazaar</div>
+      </div>
+      <div class="sessions-item">
+        <img src="uploads/work/pga tour.webp" alt="PGA Tour" />
+        <div class="sessions-item-label">PGA Tour</div>
+      </div>
+      <div class="sessions-item">
+        <img src="uploads/work/Rolling stone cover.webp" alt="Rolling Stone Cover" />
+        <div class="sessions-item-label">Rolling Stone</div>
+      </div>
+      <div class="sessions-item">
+        <img src="uploads/work/faddy cover.webp" alt="Faddy Cover" />
+        <div class="sessions-item-label">Faddy</div>
+      </div>
+      <div class="sessions-item">
+        <img src="uploads/work/Artist box.webp" alt="Artist Box" />
+        <div class="sessions-item-label">Artist Box</div>
+      </div>
+      <div class="sessions-item">
+        <img src="uploads/work/Spring_Fitness_Miami_Beach-EstudioFe_397.raf copia.JPG" alt="Spring Fitness Miami Beach" />
+        <div class="sessions-item-label">Spring Fitness — Miami Beach</div>
       </div>
     </div>
   </section>
