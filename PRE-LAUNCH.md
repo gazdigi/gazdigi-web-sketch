@@ -10,17 +10,18 @@ Track each item before going live. Check the box when done.
 - [ ] **Create a dedicated OG image** — `hero.jpg` is portrait-oriented and will crop badly in social link previews. Create a landscape 1200 × 630 px image and update the `og:image` / `twitter:image` tags in `<head>`.
 - [ ] **Verify `foundingDate`** — JSON-LD structured data has `"foundingDate": "2016"`. Correct if needed.
 - [ ] **Confirm Twitter/X handle** — `@gazdigi` is set in `twitter:site` and `twitter:creator`. Verify this handle exists and is active.
-- [ ] **Add `sitemap.xml`** — create and upload to root. Submit to Google Search Console after launch.
-- [ ] **Add `robots.txt`** — create with `Sitemap:` directive pointing to `sitemap.xml`.
+- [x] **Add `sitemap.xml`** — created at root. Submit to Google Search Console after launch.
+- [x] **Add `robots.txt`** — created with `Sitemap:` directive pointing to `sitemap.xml`.
 - [ ] **Set up Google Search Console** — verify ownership and submit sitemap.
 - [ ] **Set up Google Business Profile** — claim/create listing for Miami, FL to boost local SEO.
-- [ ] **Add favicon** — no favicon is set. Add `favicon.ico`, a 32×32 PNG, and an `apple-touch-icon` (180×180 PNG). Link them in `<head>`. *(in progress on this branch)*
+- [x] **Add favicon** — inline SVG favicon added. PNG fallbacks (`favicon-32.png`, `apple-touch-icon.png`) still need to be exported and added to root.
+- [x] **Make ticker keywords crawlable** — all 12 ticker items now rendered as static HTML. JS clones them for the animation loop.
 
 ---
 
 ## Content & Links
 
-- [ ] **Fix Instagram link** — contact section has `href="#"` for `@gazdigi`. Replace with `https://www.instagram.com/gazdigi`.
+- [x] **Fix Instagram link** — `@gazdigi` now points to `https://www.instagram.com/gazdigi`.
 - [ ] **Replace screenshot filenames in Work section** — `Screenshot 2026-04-15 at 5.44.58 PM.png` etc. are being served publicly. Rename to clean slugs (e.g. `studio-setup-full-cart.jpg`) and update `src` attributes.
 - [ ] **Fill the "Coming Soon" work slot** — placeholder image in the work strip needs a real photo before launch.
 - [ ] **Verify `hero.jpg` aspect ratio for OG** — if reusing hero.jpg as OG image, confirm its dimensions and crop to 1200 × 630.
@@ -43,6 +44,12 @@ Track each item before going live. Check the box when done.
 - [ ] **Test Open Graph preview** — use the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) and [Twitter Card Validator](https://cards-dev.twitter.com/validator) to confirm link previews render correctly.
 - [ ] **Check image file sizes** — `hero.jpg` and work photos should be compressed and served as WebP where possible. Target under 200 KB per image.
 - [ ] **Set cache headers** — configure host to send long `Cache-Control` headers for images and fonts.
+
+---
+
+## Code Quality
+
+- [x] **Remove empty `.stat-item {}` ruleset** — empty CSS ruleset found at line 440, removed.
 
 ---
 
