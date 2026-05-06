@@ -742,33 +742,40 @@
       border-top: 1px solid oklch(18% 0.008 240 / 0.08);
     }
     .sessions-masonry {
-      columns: 3;
-      column-gap: 4px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
       margin-top: 64px;
+      align-items: start;
     }
     .sessions-item {
-      break-inside: avoid;
-      margin-bottom: 4px;
       position: relative;
-      overflow: hidden;
-      cursor: none;
+      z-index: 1;
+      transition: transform 0.45s var(--ease-out);
     }
-    .sessions-item img {
+    .sessions-item:hover { z-index: 10; }
+    .sessions-img-wrap {
+      width: 80%;
+      margin: 0 auto;
+      position: relative;
+    }
+    .sessions-img-wrap img {
       width: 100%;
       height: auto;
       display: block;
       filter: grayscale(12%) brightness(0.96);
-      transition: filter 0.5s, transform 0.6s var(--ease-out);
+      transform-origin: center center;
+      transition: filter 0.5s, transform 0.55s var(--ease-out);
     }
-    .sessions-item:hover img {
+    .sessions-item:hover .sessions-img-wrap img {
       filter: grayscale(0%) brightness(1);
-      transform: scale(1.04);
+      transform: scale(1.3);
     }
     .sessions-item-label {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      padding: 14px 18px;
-      background: linear-gradient(to top, oklch(18% 0.008 240 / 0.72), transparent);
+      padding: 12px 16px;
+      background: linear-gradient(to top, oklch(18% 0.008 240 / 0.75), transparent);
       font-family: var(--mono);
       font-size: 10px;
       letter-spacing: 0.14em;
@@ -777,6 +784,7 @@
       opacity: 0;
       transform: translateY(6px);
       transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
     }
     .sessions-item:hover .sessions-item-label {
       opacity: 1;
@@ -1384,32 +1392,46 @@
     </div>
     <div class="sessions-masonry">
       <div class="sessions-item">
-        <img src="uploads/work/Nike Canada.png" alt="Nike Canada" />
-        <div class="sessions-item-label">Nike Canada</div>
+        <div class="sessions-img-wrap">
+          <img src="uploads/work/Nike Canada.png" alt="Nike Canada" />
+          <div class="sessions-item-label">Nike Canada</div>
+        </div>
       </div>
       <div class="sessions-item">
-        <img src="uploads/work/harpers cover.webp" alt="Harper's Bazaar Cover" />
-        <div class="sessions-item-label">Harper's Bazaar</div>
+        <div class="sessions-img-wrap">
+          <img src="uploads/work/harpers cover.webp" alt="Harper's Bazaar Cover" />
+          <div class="sessions-item-label">Harper's Bazaar</div>
+        </div>
       </div>
       <div class="sessions-item">
-        <img src="uploads/work/pga tour.webp" alt="PGA Tour" />
-        <div class="sessions-item-label">PGA Tour</div>
+        <div class="sessions-img-wrap">
+          <img src="uploads/work/pga tour.webp" alt="PGA Tour" />
+          <div class="sessions-item-label">PGA Tour</div>
+        </div>
       </div>
       <div class="sessions-item">
-        <img src="uploads/work/Rolling stone cover.webp" alt="Rolling Stone Cover" />
-        <div class="sessions-item-label">Rolling Stone</div>
+        <div class="sessions-img-wrap">
+          <img src="uploads/work/Rolling stone cover.webp" alt="Rolling Stone Cover" />
+          <div class="sessions-item-label">Rolling Stone</div>
+        </div>
       </div>
       <div class="sessions-item">
-        <img src="uploads/work/faddy cover.webp" alt="Faddy Cover" />
-        <div class="sessions-item-label">Faddy</div>
+        <div class="sessions-img-wrap">
+          <img src="uploads/work/faddy cover.webp" alt="Faddy Cover" />
+          <div class="sessions-item-label">Faddy</div>
+        </div>
       </div>
       <div class="sessions-item">
-        <img src="uploads/work/Artist box.webp" alt="Artist Box" />
-        <div class="sessions-item-label">Artist Box</div>
+        <div class="sessions-img-wrap">
+          <img src="uploads/work/Artist box.webp" alt="Artist Box" />
+          <div class="sessions-item-label">Artist Box</div>
+        </div>
       </div>
       <div class="sessions-item">
-        <img src="uploads/work/Spring_Fitness_Miami_Beach-EstudioFe_397.raf copia.JPG" alt="Spring Fitness Miami Beach" />
-        <div class="sessions-item-label">Spring Fitness — Miami Beach</div>
+        <div class="sessions-img-wrap">
+          <img src="uploads/work/Spring_Fitness_Miami_Beach-EstudioFe_397.raf copia.JPG" alt="Spring Fitness Miami Beach" />
+          <div class="sessions-item-label">Spring Fitness — Miami Beach</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1578,6 +1600,23 @@
     strip.style.overflowX = 'auto';
     strip.style.scrollbarWidth = 'none';
     strip.style.msOverflowStyle = 'none';
+
+    // ── Sessions gallery — neighbor displacement on hover ──
+    (function () {
+      const items = Array.from(document.querySelectorAll('.sessions-item'));
+      const COLS = 3;
+      const SHIFT = 36;
+      items.forEach((item, i) => {
+        item.addEventListener('mouseenter', () => {
+          const col = i % COLS;
+          if (col > 0) items[i - 1].style.transform = `translateX(-${SHIFT}px)`;
+          if (col < COLS - 1 && items[i + 1]) items[i + 1].style.transform = `translateX(${SHIFT}px)`;
+        });
+        item.addEventListener('mouseleave', () => {
+          items.forEach(it => it.style.transform = '');
+        });
+      });
+    }());
   </script>
 
 
