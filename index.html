@@ -777,12 +777,12 @@
     }
     .sessions-ticker-inner {
       display: flex;
-      gap: 0;
       white-space: nowrap;
-      animation: ticker 38s linear infinite;
+      will-change: transform;
     }
     .sessions-ticker-inner .ticker-item {
       padding: 0 16px;
+      flex-shrink: 0;
     }
 
     /* ── CONTACT ── */
@@ -1604,25 +1604,38 @@
     strip.style.scrollbarWidth = 'none';
     strip.style.msOverflowStyle = 'none';
 
-    // ── Sessions ticker — shuffle on each load ──
+    // ── Sessions ticker — shuffle on load, rAF infinite scroll ──
     (function () {
       const words = [
-        'Jorge Duva', 'Javi Eyzaguirre', 'Alexis Belhumeur', 'Pablo Salazar',
-        'Dina Zhulii', 'Estudio Fe', 'Bam Productions', 'Ginga Pictures',
-        'Alska Films', 'Knas Creative', 'VML', 'Till Dawn',
-        'Nike', 'Vogue', 'Harper’s Bazaar', 'Marie Claire',
-        'Perry Ellis', 'PGA Tour', 'Original Penguin', 'Elle', 'Flaunt'
+        "Jorge Duva","Javi Eyzaguirre","Alexis Belhumeur","Pablo Salazar",
+        "Dina Zhulii","Estudio Fe","Bam Productions","Ginga Pictures",
+        "Alska Films","Knas Creative","VML","Till Dawn",
+        "Nike","Vogue","Harper’s Bazaar","Marie Claire",
+        "Perry Ellis","PGA Tour","Original Penguin","Elle","Flaunt"
       ];
       for (let i = words.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [words[i], words[j]] = [words[j], words[i]];
       }
-      const ticker = document.getElementById('sessions-ticker');
+      const ticker = document.getElementById(‘sessions-ticker’);
       if (!ticker) return;
       const set = words.map(w =>
         `<span class="ticker-item"><span class="ticker-dot"></span>${w}</span>`
-      ).join('');
+      ).join(‘’);
       ticker.innerHTML = set + set;
+
+      requestAnimationFrame(function measure() {
+        const singleW = ticker.scrollWidth / 2;
+        if (singleW === 0) { requestAnimationFrame(measure); return; }
+        const speed = singleW / (38 * 60);
+        let pos = 0;
+        (function tick() {
+          pos -= speed;
+          if (-pos >= singleW) pos += singleW;
+          ticker.style.transform = ‘translateX(‘ + pos + ‘px)’;
+          requestAnimationFrame(tick);
+        })();
+      });
     }());
 
     // ── Sessions strip — mouse-position scroll ──
