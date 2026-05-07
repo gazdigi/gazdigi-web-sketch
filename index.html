@@ -974,6 +974,7 @@
       .sessions-strip { overflow-x: auto; cursor: grab; }
       .sessions-strip:active { cursor: grabbing; }
 
+
       #hero { padding: 96px 24px 60px; }
       .hero-scroll-hint { right: 24px; }
       .hero-actions { flex-direction: column; gap: 12px; }
@@ -1032,6 +1033,14 @@
       .tech-grid { grid-template-columns: repeat(2, 1fr); }
       .tech-item:nth-child(3n) { border-right: 1px solid oklch(18% 0.008 240 / 0.1); }
       .tech-item:nth-child(2n) { border-right: none; }
+    }
+    /* Touch devices — any screen size (covers iPads, tablets) */
+    @media (hover: none) and (pointer: coarse) {
+      .sessions-strip {
+        overflow-x: auto;
+        cursor: grab;
+      }
+      .sessions-strip:active { cursor: grabbing; }
     }
   </style>
 </head>
