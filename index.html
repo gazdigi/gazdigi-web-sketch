@@ -385,9 +385,8 @@
     }
     .ticker-inner {
       display: flex;
-      gap: 0;
       white-space: nowrap;
-      animation: ticker 28s linear infinite;
+      will-change: transform;
     }
     .ticker-item {
       display: inline-flex;
@@ -1106,20 +1105,7 @@
 
   <!-- TICKER -->
   <div class="ticker-wrap">
-    <div class="ticker-inner" id="ticker">
-      <span class="ticker-item"><span class="ticker-dot"></span>Capture One</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Tethered Capture</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>File Management</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Live Color</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>AI Automation</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>On-Location</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Studio</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Scripting</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>LUT Design</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Digital Tech</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>RAW Workflow</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>ICC Profiles</span>
-    </div>
+    <div class="ticker-inner" id="ticker"></div>
   </div>
 
   <!-- ABOUT -->
@@ -1579,10 +1565,32 @@
       requestAnimationFrame(draw);
     })();
 
-    // ── Ticker — duplicate static HTML nodes for seamless loop ──
-    const ticker = document.getElementById('ticker');
-    const originals = Array.from(ticker.children);
-    originals.forEach(el => ticker.appendChild(el.cloneNode(true)));
+    // ── Hero ticker — rAF infinite scroll ──
+    (function () {
+      const ticker = document.getElementById("ticker");
+      if (!ticker) return;
+      const words = [
+        "Capture One","Tethered Capture","File Management","Live Color",
+        "AI Automation","On-Location","Studio","Scripting",
+        "LUT Design","Digital Tech","RAW Workflow","ICC Profiles"
+      ];
+      const set = words.map(function(w) {
+        return "<span class=\"ticker-item\"><span class=\"ticker-dot\"></span>" + w + "</span>";
+      }).join("");
+      ticker.innerHTML = set + set;
+      requestAnimationFrame(function measure() {
+        const singleW = ticker.scrollWidth / 2;
+        if (singleW === 0) { requestAnimationFrame(measure); return; }
+        const speed = singleW / (28 * 60);
+        let pos = 0;
+        (function tick() {
+          pos -= speed;
+          if (-pos >= singleW) pos += singleW;
+          ticker.style.transform = "translateX(" + pos + "px)";
+          requestAnimationFrame(tick);
+        })();
+      });
+    }());
 
     // ── Scroll reveal ──
     const revealEls = document.querySelectorAll('.reveal');
