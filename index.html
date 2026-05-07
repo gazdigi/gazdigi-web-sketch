@@ -1570,7 +1570,7 @@
       const ticker = document.getElementById("ticker");
       if (!ticker) return;
       const words = [
-        "Capture One","Tethered Capture","File Management","Live Color",
+        "Capture One Studio","Tethered Capture","File Management","Live Color",
         "AI Automation","On-Location","Studio","Scripting",
         "LUT Design","Digital Tech","RAW Workflow","ICC Profiles"
       ];
@@ -1581,7 +1581,7 @@
       requestAnimationFrame(function measure() {
         const singleW = ticker.scrollWidth / 2;
         if (singleW === 0) { requestAnimationFrame(measure); return; }
-        const speed = singleW / (50 * 60);
+        const speed = singleW / (65 * 60);
         let pos = 0;
         (function tick() {
           pos -= speed;
