@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gazdigi</title>
   <link rel="icon" type="image/png" href="uploads/fav_icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -25,15 +28,35 @@
       padding-right: 10%;
     }
 
+    .logo-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
     img {
       max-width: 420px;
       width: 100%;
       height: auto;
       display: block;
     }
+
+    .tagline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: clamp(52px, 7.5vw, 130px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: oklch(97% 0.004 60);
+      white-space: nowrap;
+      margin-top: 0.2em;
+    }
   </style>
 </head>
 <body>
-  <img src="uploads/logo_provisional.jpg" alt="Gazdigi">
+  <div class="logo-block">
+    <img src="uploads/logo_provisional.jpg" alt="Gazdigi">
+    <p class="tagline">the workflow behind the image*</p>
+  </div>
 </body>
 </html>
