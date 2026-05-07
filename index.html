@@ -775,6 +775,14 @@
       padding: 18px 0;
       background: oklch(18% 0.008 240 / 0.02);
     }
+    .sessions-ticker-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg3);
+      padding: 0 52px 12px;
+    }
     .sessions-ticker-inner {
       display: flex;
       white-space: nowrap;
@@ -1436,6 +1444,7 @@
 
   <!-- SESSIONS TICKER -->
   <div class="sessions-ticker-wrap">
+    <p class="sessions-ticker-label">Friends &amp; Partners:</p>
     <div class="sessions-ticker-inner" id="sessions-ticker"></div>
   </div>
 
