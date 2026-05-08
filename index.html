@@ -1521,50 +1521,7 @@
     </div>
     <p class="sr-only">gazdigi* has provided on-set digital tech services for editorial and commercial productions including Nike, Rolling Stone, Vogue, Harper's Bazaar, Marie Claire, Glamour, PGA Tour, Walmart, Costco, Sam's Club among many others — across studio and on-location environments throughout South Florida.</p>
     <div class="sessions-strip">
-      <div class="sessions-track">
-        <div class="sessions-card">
-          <img src="uploads/work/nike_canada_01.jpg" alt="Nike Canada" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/nike_canada_02.jpg" alt="Nike Canada" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/harpers_cover_01.webp" alt="Harper's Bazaar" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/harpers_cover_02.jpg" alt="Harper's Bazaar" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/pga_tour.webp" alt="PGA Tour" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/Rolling_stone_cover.webp" alt="Rolling Stone" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/rolling_stone_02.jpg" alt="Rolling Stone" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/faddy_cover.webp" alt="Faddy" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/art_deco_01.jpg" alt="Art Deco" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/art_deco_02.jpg" alt="Art Deco" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/beauty_01.jpg" alt="Beauty" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/beauty_02.jpg" alt="Beauty" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/Spring_Fitness_Miami_Beach_EstudioFe_01.JPG" alt="Spring Fitness — Miami Beach" />
-        </div>
-        <div class="sessions-card">
-          <img src="uploads/work/Spring_Fitness_Miami_Beach_EstudioFe_02.JPG" alt="Spring Fitness — Miami Beach" />
-        </div>
-      </div>
+      <div class="sessions-track" id="sessions-track"></div>
     </div>
   </section>
 
@@ -1787,6 +1744,33 @@
           requestAnimationFrame(tick);
         })();
       });
+    }());
+
+    // ── Sessions gallery — grouped shuffle ──
+    (function () {
+      var groups = [
+        [{src:"uploads/work/nike_canada_01.jpg",alt:"Nike Canada"},{src:"uploads/work/nike_canada_02.jpg",alt:"Nike Canada"}],
+        [{src:"uploads/work/harpers_cover_01.webp",alt:"Harper's Bazaar"},{src:"uploads/work/harpers_cover_02.jpg",alt:"Harper's Bazaar"}],
+        [{src:"uploads/work/pga_tour.webp",alt:"PGA Tour"}],
+        [{src:"uploads/work/Rolling_stone_cover.webp",alt:"Rolling Stone"},{src:"uploads/work/rolling_stone_02.jpg",alt:"Rolling Stone"}],
+        [{src:"uploads/work/faddy_cover.webp",alt:"Faddy"}],
+        [{src:"uploads/work/art_deco_01.jpg",alt:"Art Deco"},{src:"uploads/work/art_deco_02.jpg",alt:"Art Deco"}],
+        [{src:"uploads/work/beauty_01.jpg",alt:"Beauty"},{src:"uploads/work/beauty_02.jpg",alt:"Beauty"}],
+        [{src:"uploads/work/Spring_Fitness_Miami_Beach_EstudioFe_01.JPG",alt:"Spring Fitness — Miami Beach"},{src:"uploads/work/Spring_Fitness_Miami_Beach_EstudioFe_02.JPG",alt:"Spring Fitness — Miami Beach"}]
+      ];
+      for (var i = groups.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = groups[i]; groups[i] = groups[j]; groups[j] = t;
+      }
+      var track = document.getElementById("sessions-track");
+      if (!track) return;
+      var html = "";
+      groups.forEach(function(group) {
+        group.forEach(function(img) {
+          html += "<div class=\"sessions-card\"><img src=\"" + img.src + "\" alt=\"" + img.alt + "\" loading=\"lazy\" /></div>";
+        });
+      });
+      track.innerHTML = html;
     }());
 
     // ── Sessions strip — mouse-position scroll ──
