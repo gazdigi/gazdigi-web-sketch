@@ -1815,11 +1815,12 @@
       });
     }());
 
-    // ── Sessions strip — mouse-position scroll ──
+    // ── Sessions strip — mouse-position scroll (desktop only) ──
     (function () {
       const strip = document.querySelector('.sessions-strip');
       const track = document.querySelector('.sessions-track');
       if (!strip || !track) return;
+      if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
 
       let targetX = 0, currentX = 0;
 
