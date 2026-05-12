@@ -1051,6 +1051,27 @@
       }
       .sessions-strip:active, .photo-strip:active { cursor: grabbing; }
       .photo-item { cursor: default; }
+      .gallery-arrow {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: oklch(8% 0.01 240 / 0.55);
+        border: 1px solid oklch(97% 0.004 60 / 0.25);
+        color: oklch(97% 0.004 60);
+        cursor: pointer;
+        transition: opacity 0.5s;
+        pointer-events: auto;
+      }
+      .gallery-arrow--left { left: 12px; }
+      .gallery-arrow--right { right: 12px; }
+      .gallery-arrow.fade-out { opacity: 0; pointer-events: none; }
     }
   </style>
   <script type="application/ld+json">
@@ -1262,23 +1283,27 @@
       <p class="section-label reveal">02 — In the Field</p>
       <h2 class="section-title reveal reveal-delay-1">The setup.</h2>
     </div>
-    <div class="photo-strip" id="photo-strip">
-      <div class="photo-item">
-        <img src="uploads/setup/01_setup_studio.jpg" alt="gazdigi* studio setup 01" />
-        <div class="photo-caption">Studio setup - full cart</div>
+    <div class="gallery-wrap" id="photo-strip-wrap" style="position:relative;">
+      <div class="photo-strip" id="photo-strip">
+        <div class="photo-item">
+          <img src="uploads/setup/01_setup_studio.jpg" alt="gazdigi* studio setup 01" />
+          <div class="photo-caption">Studio setup - full cart</div>
+        </div>
+        <div class="photo-item">
+          <img src="uploads/setup/02_setup_studio.jpg" alt="gazdigi* studio setup 02" />
+          <div class="photo-caption">Studio setup - basic cart</div>
+        </div>
+        <div class="photo-item">
+          <img src="uploads/setup/03_setup_location.jpg" alt="gazdigi* on location 01" />
+          <div class="photo-caption">On-location multiple monitor</div>
+        </div>
+        <div class="photo-item">
+          <img src="uploads/setup/04_setup_location.jpg" alt="gazdigi* on location 02" />
+          <div class="photo-caption">On-location basic setup</div>
+        </div>
       </div>
-      <div class="photo-item">
-        <img src="uploads/setup/02_setup_studio.jpg" alt="gazdigi* studio setup 02" />
-        <div class="photo-caption">Studio setup - basic cart</div>
-      </div>
-      <div class="photo-item">
-        <img src="uploads/setup/03_setup_location.jpg" alt="gazdigi* on location 01" />
-        <div class="photo-caption">On-location multiple monitor</div>
-      </div>
-      <div class="photo-item">
-        <img src="uploads/setup/04_setup_location.jpg" alt="gazdigi* on location 02" />
-        <div class="photo-caption">On-location basic setup</div>
-      </div>
+      <button class="gallery-arrow gallery-arrow--left" style="display:none;" aria-label="Scroll left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 4 6 9 11 14"/></svg></button>
+      <button class="gallery-arrow gallery-arrow--right" style="display:none;" aria-label="Scroll right"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 4 12 9 7 14"/></svg></button>
     </div>
     <div style="padding: 64px 52px 0;">
       <div class="services-grid">
@@ -1507,8 +1532,12 @@
       </div>
     </div>
     <p class="sr-only">gazdigi* has provided on-set digital tech services for editorial and commercial productions including Nike, Rolling Stone, Vogue, Harper's Bazaar, Marie Claire, Glamour, PGA Tour, Walmart, Costco, Sam's Club among many others — across studio and on-location environments throughout South Florida.</p>
-    <div class="sessions-strip">
-      <div class="sessions-track" id="sessions-track"></div>
+    <div class="gallery-wrap" id="sessions-strip-wrap" style="position:relative;">
+      <div class="sessions-strip">
+        <div class="sessions-track" id="sessions-track"></div>
+      </div>
+      <button class="gallery-arrow gallery-arrow--left" style="display:none;" aria-label="Scroll left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 4 6 9 11 14"/></svg></button>
+      <button class="gallery-arrow gallery-arrow--right" style="display:none;" aria-label="Scroll right"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 4 12 9 7 14"/></svg></button>
     </div>
   </section>
 
@@ -1764,6 +1793,25 @@
         });
       });
       track.innerHTML = html;
+    }());
+
+    // ── Gallery arrows — mobile swipe hint ──
+    (function () {
+      if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+      [
+        { wrapId: 'photo-strip-wrap', stripSel: '#photo-strip' },
+        { wrapId: 'sessions-strip-wrap', stripSel: '.sessions-strip' }
+      ].forEach(function (cfg) {
+        var wrap = document.getElementById(cfg.wrapId);
+        var strip = document.querySelector(cfg.stripSel);
+        if (!wrap || !strip) return;
+        var left = wrap.querySelector('.gallery-arrow--left');
+        var right = wrap.querySelector('.gallery-arrow--right');
+        function hide() { left.classList.add('fade-out'); right.classList.add('fade-out'); }
+        left.addEventListener('click', function () { strip.scrollBy({ left: -280, behavior: 'smooth' }); });
+        right.addEventListener('click', function () { strip.scrollBy({ left: 280, behavior: 'smooth' }); });
+        strip.addEventListener('touchstart', hide, { once: true, passive: true });
+      });
     }());
 
     // ── Sessions strip — mouse-position scroll ──
