@@ -1044,11 +1044,13 @@
     }
     /* Touch devices — any screen size (covers iPads, tablets) */
     @media (hover: none) and (pointer: coarse) {
-      .sessions-strip {
-        overflow-x: auto;
+      .sessions-strip, .photo-strip {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
         cursor: grab;
       }
-      .sessions-strip:active { cursor: grabbing; }
+      .sessions-strip:active, .photo-strip:active { cursor: grabbing; }
+      .photo-item { cursor: default; }
     }
   </style>
   <script type="application/ld+json">
@@ -1685,10 +1687,11 @@
       });
     }, 100);
 
-    // ── Photo strip — mouse-position scroll ──
+    // ── Photo strip — mouse-position scroll (desktop only) ──
     (function () {
       const strip = document.getElementById('photo-strip');
       if (!strip) return;
+      if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
       strip.style.overflowX = 'hidden';
       strip.style.scrollbarWidth = 'none';
       strip.style.msOverflowStyle = 'none';
