@@ -1685,21 +1685,26 @@
       });
     }, 100);
 
-    // ── Photo strip drag scroll ──
-    const strip = document.getElementById('photo-strip');
-    let isDown = false, startX, scrollLeft;
-    strip.addEventListener('mousedown', e => { isDown = true; strip.style.cursor = 'grabbing'; startX = e.pageX - strip.offsetLeft; scrollLeft = strip.scrollLeft; });
-    strip.addEventListener('mouseleave', () => { isDown = false; strip.style.cursor = ''; });
-    strip.addEventListener('mouseup', () => { isDown = false; strip.style.cursor = ''; });
-    strip.addEventListener('mousemove', e => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - strip.offsetLeft;
-      strip.scrollLeft = scrollLeft - (x - startX) * 1.5;
-    });
-    strip.style.overflowX = 'auto';
-    strip.style.scrollbarWidth = 'none';
-    strip.style.msOverflowStyle = 'none';
+    // ── Photo strip — mouse-position scroll ──
+    (function () {
+      const strip = document.getElementById('photo-strip');
+      if (!strip) return;
+      strip.style.overflowX = 'hidden';
+      strip.style.scrollbarWidth = 'none';
+      strip.style.msOverflowStyle = 'none';
+      let targetX = 0, currentX = 0;
+      strip.addEventListener('mousemove', (e) => {
+        const rect = strip.getBoundingClientRect();
+        const ratio = (e.clientX - rect.left) / rect.width;
+        const maxScroll = strip.scrollWidth - rect.width;
+        targetX = ratio * maxScroll;
+      });
+      (function tick() {
+        currentX += (targetX - currentX) * 0.06;
+        strip.scrollLeft = currentX;
+        requestAnimationFrame(tick);
+      }());
+    }());
 
     // ── Sessions ticker — shuffle on load, rAF infinite scroll ──
     (function () {
